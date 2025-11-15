@@ -63,7 +63,7 @@ export default function Index() {
                   marginRight: 5,
                   marginBottom: 10
                 }}
-                className="mt-2pb-32"
+                className="mt-2 pb-32"
                 scrollEnabled={false}
               />
             </>
