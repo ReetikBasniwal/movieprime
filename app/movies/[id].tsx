@@ -1,7 +1,7 @@
 import { icons } from '@/constants/icons';
 import { fetchMovieDetails } from '@/services/api';
 import useFetch from '@/services/useFetch';
-import { router, useLocalSearchParams } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import React from 'react';
 import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 
@@ -10,7 +10,7 @@ interface MovieInfoProps {
   value?: string | number | null;
 }
 
-const MovieInfo = ({ label, value }: MovieInfoProps) => (
+const MovieInfo: React.FC<MovieInfoProps> = ({ label, value }) => (
   <View className="flex-col items-start justify-center mt-5">
     <Text className="text-light-200 font-normal text-sm">
       {label}
@@ -21,10 +21,11 @@ const MovieInfo = ({ label, value }: MovieInfoProps) => (
   </View>
 )
 
-const MovieDetails = () => {
-  const { id } = useLocalSearchParams();
+const MovieDetails: React.FC = () => {
+  const { id } = useLocalSearchParams<{ id?: string }>();
+  const router = useRouter();
 
-  const { data: movie, loading } = useFetch(() => fetchMovieDetails(id as string));
+  const { data: movie, loading } = useFetch<any>(() => fetchMovieDetails(id as string));
 
   return (
     <View className="bg-primary flex-1">
@@ -32,10 +33,12 @@ const MovieDetails = () => {
         paddingBottom: 80
       }}>
         <View>
-          <Image 
-            source={{ uri: `https://image.tmdb.org/t/p/w500/${movie?.poster_path}`}}
-            className="w-full h-[500px]"
-          />
+          {movie?.poster_path ? (
+            <Image
+              source={{ uri: `https://image.tmdb.org/t/p/w500/${movie.poster_path}` }}
+              className="w-full h-[500px]"
+            />
+          ) : null}
         </View>
 
         <View className="flex-col items-start justify-center mt-5 px-5">
@@ -60,25 +63,28 @@ const MovieDetails = () => {
           </View>
 
           <MovieInfo label={"Overview"} value={movie?.overview} />
-          <MovieInfo 
-            label={"Genres"} 
-            value={movie?.genres?.map((g) => g.name).join(' - ') || 'N/A'}  
+          <MovieInfo
+            label={"Genres"}
+            value={movie?.genres?.map((g: any) => g.name).join(' - ') || 'N/A'}
           />
           <View className="flex flex-row justify-between w-1/2">
             <MovieInfo label="Budget" value={`$${movie?.budget/1000000}`} />
             <MovieInfo label="Revenue" value={`$${Math.round(movie?.revenue)/1000000}`} />
           </View>
 
-          <MovieInfo 
-            label={"Production Companies"} 
-            value={movie?.production_companies?.map((c) => c.name).join(' - ') || 'N/A'}  
+          <MovieInfo
+            label={"Production Companies"}
+            value={movie?.production_companies?.map((c: any) => c.name).join(' - ') || 'N/A'}
           />
 
         </View>
       </ScrollView>
 
-      <TouchableOpacity className='absolute bottom-5 left-0 right-0 mx-5 bg-accent rounded-lg py-3.5 
-      flex flex-row items-center justify-center z-50' onPress={router.back}>
+      <TouchableOpacity
+        className='absolute bottom-5 left-0 right-0 mx-5 bg-accent rounded-lg py-3.5 
+      flex flex-row items-center justify-center z-50'
+        onPress={() => router.back()}
+      >
         <Image source={icons.arrow} className='size-5 mr-1 mt-0.5 rotate-180' tintColor={"#fff"}/>
         <Text className="text-white font-semibold text-base">
           Go back
