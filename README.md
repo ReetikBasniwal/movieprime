@@ -64,29 +64,3 @@ Trending / Featured
 Latest Movies
 
 ![Latest screenshot](assets/screenshots/latest.png)
-
-How to add your screenshots
-
-1. Create the folder `assets/screenshots/` in the project root (if it doesn't already exist).
-2. Copy your three PNG images into that folder with these filenames:
-    - `home.png` — Home screen with search & trending
-    - `trending.png` — Trending movies row
-    - `latest.png` — Latest movies row
-
-Example (macOS / zsh):
-
-```bash
-# from the project root
-mkdir -p assets/screenshots
-cp \\
-   "/Users/yourname/Library/Group Containers/group.com.apple.coreservices.useractivityd/shared-pasteboard/items/0A449F4E-5AAE-46BE-A601-D90AE6C14466/IMG_6955.png" \
-   assets/screenshots/home.png
-cp \\
-   "/Users/yourname/Library/Group Containers/group.com.apple.coreservices.useractivityd/shared-pasteboard/items/C2C5A988-DEA9-4E1C-933C-04C5E6B6555C/IMG_6956.png" \
-   assets/screenshots/trending.png
-cp \\
-   "/Users/yourname/Library/Group Containers/group.com.apple.coreservices.useractivityd/shared-pasteboard/items/8EAFB437-BEDD-402A-AC7F-1DE4CD98B367/IMG_6957.png" \
-   assets/screenshots/latest.png
-```
-
-If you want me to add the actual PNG files to the repository, upload the images here or give me the local paths and confirm I should copy them into `assets/screenshots/`.
